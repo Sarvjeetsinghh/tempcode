@@ -1,0 +1,11 @@
+# Eclipse
+.metadata/
+*.log
+*.tmp
+*.class
+*.jar
+*.war
+*.settings/
+*.project
+*.classpath
+Servers/

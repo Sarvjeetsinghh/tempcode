@@ -4,13 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Employer Registration - DreamJob</title>
-
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -66,15 +61,14 @@
 
 <div class="register-box">
     <h3>Employer Registration</h3>
-
-    <form action="EmployerRegisterServlet" method="post" enctype="multipart/form-data">
+    <form action="employerRegister" method="post">
         <div class="mb-3">
             <label class="form-label">Company Name</label>
-            <input type="text" class="form-control" name="name" placeholder="Enter company name" required>
+            <input type="text" class="form-control" name="companyName" placeholder="Enter company name" required>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Email Address</label>
+            <label class="form-label">Email</label>
             <input type="email" class="form-control" name="email" placeholder="Enter email" required>
         </div>
 
@@ -84,24 +78,34 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Contact Person</label>
-            <input type="text" class="form-control" name="person" placeholder="Enter contact person name" required>
+            <label class="form-label">Phone</label>
+            <input type="text" class="form-control" name="phone" placeholder="Enter contact number">
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Designation</label>
-            <input type="text" class="form-control" name="designation" placeholder="Enter designation" required>
+            <label class="form-label">Industry</label>
+            <input type="text" class="form-control" name="industry" placeholder="Enter industry">
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Company Logo</label>
-            <input type="file" class="form-control" name="logo" accept="image/*">
+            <label class="form-label">Website</label>
+            <input type="text" class="form-control" name="website" placeholder="Enter website URL">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-control" name="address" placeholder="Enter company address">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" name="description" placeholder="Enter company description"></textarea>
         </div>
 
         <button type="submit" class="btn btn-custom">Register</button>
 
         <div class="bottom-text">
-            Already have an account? <a href="employer_login.jsp">Login here</a>
+            Already have an account? <a href="login.jsp">Login here</a>
         </div>
     </form>
 </div>

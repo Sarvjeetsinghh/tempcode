@@ -1,106 +1,97 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Job Portal</title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <title>Login - DreamJob</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #C6F2FF, #A2E2FF);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .login-box {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 40px 35px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.3);
-            width: 380px;
-            text-align: center;
-        }
-
-        .login-box h2 {
-            color: #004E8F;
-            font-weight: 600;
-            margin-bottom: 25px;
-        }
-
-        .form-control {
-            border-radius: 20px;
-            border: none;
-            padding: 12px 15px;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-
-        .form-control:focus {
-            box-shadow: 0 0 8px #7DD3FC;
-        }
-
-        .btn-login {
-            width: 100%;
-            background: linear-gradient(135deg, #007BFF, #00C6FF);
-            color: white;
-            font-weight: 500;
-            border: none;
-            border-radius: 25px;
-            padding: 12px;
-            transition: 0.3s;
-        }
-
-        .btn-login:hover {
-            background: linear-gradient(135deg, #0099FF, #33D4FF);
-            transform: scale(1.03);
-        }
-
-        .extra-links {
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .extra-links a {
-            color: #004E8F;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .extra-links a:hover {
-            text-decoration: underline;
+        .login-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
     </style>
 </head>
 <body>
 
-<div class="login-box">
-    <h2>Login</h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card login-card">
+                    <div class="card-body p-5">
+                        <h3 class="text-center text-primary mb-4">
+                            <i class="bi bi-box-arrow-in-right"></i> Login to DreamJob
+                        </h3>
 
-    <form action="LoginServlet" method="post">
-        <div class="mb-3">
-            <input type="text" name="email" class="form-control" placeholder="Enter Email" required>
+                        <!-- ✅ Unified Login Form -->
+                        <form action="${pageContext.request.contextPath}/LoginServlet" method="post">
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">I am a</label>
+                                <select name="userType" class="form-select" required>
+                                    <option value="">-- Select User Type --</option>
+                                    <option value="candidate">Job Seeker / Candidate</option>
+                                    <option value="employer">Employer / Recruiter</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Email Address</label>
+                                <input type="email" name="email" class="form-control" 
+                                       placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Password</label>
+                                <input type="password" name="password" class="form-control" 
+                                       placeholder="Enter your password" required>
+                            </div>
+
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    Login
+                                </button>
+                            </div>
+
+                            <div class="text-center">
+                                <small class="text-muted">
+                                    Don't have an account? 
+                                    <a href="${pageContext.request.contextPath}/register.jsp" class="text-decoration-none fw-bold">
+                                        Register here
+                                    </a>
+                                </small>
+                            </div>
+                        </form>
+
+                        <!-- ✅ Error Message -->
+                        <% if (request.getParameter("error") != null) { %>
+                            <div class="alert alert-danger mt-3 text-center" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                <%= request.getParameter("error").replace("+", " ") %>
+                            </div>
+                        <% } %>
+
+                        <!-- ✅ Success Message -->
+                        <% if ("success".equals(request.getParameter("msg"))) { %>
+                            <div class="alert alert-success mt-3 text-center" role="alert">
+                                <i class="bi bi-check-circle-fill"></i>
+                                Registration successful! Please login now.
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <input type="password" name="password" class="form-control" placeholder="Enter Password" required>
-        </div>
+    </div>
 
-        <button type="submit" class="btn-login">Login</button>
-
-        <div class="extra-links mt-3">
-            <p>Don't have an account? <a href="register.jsp">Register Here</a></p>
-        </div>
-    </form>
-</div>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </body>
 </html>

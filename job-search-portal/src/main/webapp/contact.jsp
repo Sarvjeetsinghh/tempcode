@@ -64,6 +64,12 @@
         .social-icons a:hover {
             color: #ffdf40;
         }
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
         @media (max-width: 768px) {
             .info-box {
                 margin-top: 20px;
@@ -75,54 +81,65 @@
 
 <%@ include file="header.jsp" %>
 
-    <div class="container">
-        <div class="row align-items-center justify-content-center">
-            <div class="col-lg-5 col-md-6 col-sm-12">
-                <div class="info-box text-center">
-                    <i class="bi bi-envelope-paper-heart"></i>
-                    <h4>Get in Touch</h4>
-                    <p>We’d love to hear from you! Whether you have a question about jobs, employers, or features — our team is ready to answer all your queries.</p>
-                    <hr style="border-color: rgba(255,255,255,0.4);">
-                    <p><i class="bi bi-geo-alt-fill"></i> New Delhi, India</p>
-                    <p><i class="bi bi-telephone-fill"></i> +91 98765 43210</p>
-                    <p><i class="bi bi-envelope-fill"></i> support@dreamjob.in</p>
-                    <div class="social-icons mt-3">
-                        <a href="#"><i class="bi bi-facebook"></i></a>
-                        <a href="#"><i class="bi bi-twitter"></i></a>
-                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                        <a href="#"><i class="bi bi-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    <div class="row align-items-center justify-content-center">
 
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="contact-container">
-                    <h2 class="contact-title mb-4 text-center">📬 Contact Us</h2>
-                    <form action="ContactServlet" method="post">
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Your Name</label>
-                            <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Email Address</label>
-                            <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Subject</label>
-                            <input type="text" name="subject" class="form-control" placeholder="Enter subject" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Message</label>
-                            <textarea name="message" rows="4" class="form-control" placeholder="Write your message..." required></textarea>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-custom">Send Message</button>
-                        </div>
-                    </form>
+        <!-- Info Box -->
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <div class="info-box text-center">
+                <i class="bi bi-envelope-paper-heart"></i>
+                <h4>Get in Touch</h4>
+                <p>We’d love to hear from you! Whether you have a question about jobs, employers, or features — our team is ready to answer all your queries.</p>
+                <hr style="border-color: rgba(255,255,255,0.4);">
+                <p><i class="bi bi-geo-alt-fill"></i> Our Location:</p>
+
+                <!-- Map Embed -->
+                <div class="map-container">
+                  
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224346.5400483485!2d77.04417366224577!3d28.527252739054862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1762863050274!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+                <p class="mt-3"><i class="bi bi-telephone-fill"></i> ‪+91 98765 43210‬</p>
+                <p><i class="bi bi-envelope-fill"></i> support@dreamjob.in</p>
+                <div class="social-icons mt-3">
+                    <a href="https://www.facebook.com/profile.php?id=61583433993061" target="_blank"><i class="bi bi-facebook"></i></a>
+                    <a href="https://www.instagram.com/dreamnaukricareer/?hl=en" target="_blank"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/dreamnaukri-career-2ba264398/?skipRedirect=true" target="_blank"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://x.com/dreamnaukri" target="_blank"><i class="bi bi-twitter"></i></a>
                 </div>
             </div>
         </div>
+
+        <!-- Contact Form -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="contact-container">
+                <h2 class="contact-title mb-4 text-center">📬 Contact Us</h2>
+                <form action="ContactServlet" method="post">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Your Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email Address</label>
+                        <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Subject</label>
+                        <input type="text" name="subject" class="form-control" placeholder="Enter subject" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Message</label>
+                        <textarea name="message" rows="4" class="form-control" placeholder="Write your message..." required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-custom">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

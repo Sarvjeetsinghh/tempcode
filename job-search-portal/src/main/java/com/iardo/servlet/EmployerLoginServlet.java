@@ -1,55 +1,63 @@
 package com.iardo.servlet;
 
+
+
+import com.iardo.dao.EmployerDAO;
+import com.iardo.model.Employer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import java.io.*;
-import java.sql.*;
+import java.io.IOException;
 
-@WebServlet("/EmployerLoginServlet")
+@WebServlet("/employerLogin")
 public class EmployerLoginServlet extends HttpServlet {
 
+    private EmployerDAO employerDAO = new EmployerDAO();
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        String jdbcURL = "jdbc:mysql://localhost:3306/job_portal";
-        String dbUser = "root";
-        String dbPass = "root";
+        System.out.println("\n=== LOGIN ATTEMPT ===");
+        System.out.println("Email: " + email);
+        System.out.println("Password Length: " + (password != null ? password.length() : 0));
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(jdbcURL, dbUser, dbPass);
+        Employer employer = employerDAO.getEmployerByEmail(email);
 
-            String sql = "SELECT * FROM employer WHERE email=? AND password=?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, email);
-            stmt.setString(2, password);
+        if (employer == null) {
+            System.out.println("❌ No employer found with email: " + email);
+            response.sendRedirect(request.getContextPath() + "/employer_login.jsp?error=Invalid+email+or+password");
+            return;
+        }
 
-            ResultSet rs = stmt.executeQuery();
+        System.out.println("✅ Employer found:");
+        System.out.println("  ID: " + employer.getId());
+        System.out.println("  Company: " + employer.getCompanyName());
+        System.out.println("  DB Password: " + employer.getPassword());
+        System.out.println("  Input Password: " + password);
 
-            if (rs.next()) {
-                // ✅ Create session for logged-in employer
-                HttpSession session = request.getSession();
-                session.setAttribute("employerId", rs.getInt("id"));
-                session.setAttribute("employerName", rs.getString("name"));
-                session.setAttribute("employerEmail", rs.getString("email"));
-                session.setAttribute("designation", rs.getString("designation"));
-                session.setAttribute("person", rs.getString("person"));
+        if (employer.getPassword() != null && employer.getPassword().equals(password)) {
+            
+            HttpSession session = request.getSession(true);
+            session.setAttribute("userType", "employer");
+            session.setAttribute("employerId", employer.getId());
+            session.setAttribute("employerName", employer.getCompanyName());
+            session.setAttribute("employerEmail", employer.getEmail());
 
-                response.sendRedirect("employer_profile.jsp");
-            } else {
-                response.sendRedirect("employer_login.jsp?error=Invalid+Email+or+Password");
-            }
+            System.out.println("\n=== LOGIN SUCCESS ===");
+            System.out.println("Session ID: " + session.getId());
+            System.out.println("employerId: " + session.getAttribute("employerId"));
+            System.out.println("employerName: " + session.getAttribute("employerName"));
+            System.out.println("userType: " + session.getAttribute("userType"));
+            System.out.println("====================\n");
 
-            rs.close();
-            stmt.close();
-            conn.close();
-
-        } catch (Exception e) {
-            e.printStackTrace(response.getWriter());
+            response.sendRedirect(request.getContextPath() + "/employerDashboard");
+        } else {
+            System.out.println("❌ Password mismatch!");
+            response.sendRedirect(request.getContextPath() + "/employer_login.jsp?error=Invalid+email+or+password");
         }
     }
 }

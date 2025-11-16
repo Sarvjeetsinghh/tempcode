@@ -14,6 +14,9 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
 	rel="stylesheet">
+	
+	<!-- Bootstrap Icons CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
 <style>
 
@@ -25,6 +28,14 @@ body {
 	color: #002b5c;
 	overflow-x: hidden;
 }
+
+
+<%-- text decoration none  --%>
+
+
+<%-- text decoration none  --%>
+
+
 
 
 /* Hero Section */
@@ -46,6 +57,7 @@ body {
 	margin-top: 10px;
 	line-height: 1.6;
 }
+
 
 /* Search Bar */
 .search-section {
@@ -77,8 +89,6 @@ body {
 	transition: 0.3s;
 }
 
-
-
 /* Post Job */
 .post-btn {
 	background-color: blue;
@@ -92,134 +102,304 @@ body {
 }
 
 
+/*        Brandambsder css              */
+
+/* css- styling */
+/* HERO SECTION */
+
+
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;   /* login box ko bilkul right push */
+    padding: 20px 60px;
+    margin-top: 0;
+    gap: 40px;
+    width: 100%;
+}
+
+
+/* LEFT IMAGE */
+.hero-image img {
+    width: 460px;       /* same large size restored */
+    height: auto; 
+    object-fit: contain;
+    border-radius: 10px;
+    flex-shrink: 0;     /* IMPORTANT: image ko chhota hone se roke */
+}
+
+
+
+/* RIGHT SIDE WRAPPER (text + login ko horizontal line me rakhna) */
+.hero-right {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;                      /* full width so login goes to right */
+    gap: 50px;
+}
+
+
+/* TEXT BOX */
+.text-box {
+    max-width: 430px;
+    min-height: 260px;   /* 🔥 vertical height fixed */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* content ko evenly spread karega */
+}
+
+
+/* Heading bigger + 2 lines */
+.text-box h1 {
+    font-size: 2.3rem;
+    line-height: 1.3;
+    margin: 0 0 10px 0;
+}
+
+
+/* Paragraph 4-line look */
+.text-box p {
+    font-size: 1.15rem;
+    line-height: 1.7;   /* vertical space increase */
+}
+
+
+
+
+/* LOGIN BOX (bada + right aligned) */
+.login-box {
+    width: 330px;
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    margin-left: auto;                /* pushes login box to right end */
+}
+
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background: #0288d1;
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+/* RESPONSIVE */
+@media(max-width: 992px) {
+    .hero-section {
+        flex-direction: column;
+        padding: 30px 20px;
+    }
+
+    .hero-right {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .login-box {
+        margin: 0 auto;
+    }
+
+    .hero-image img {
+        width: 300px;
+    }
+}
+
+
+
+
 
 /* ===== FOOTER STYLES ===== */
 .footer {
-	background: linear-gradient(135deg, #002b3a, #004d66);
-	color: #f0f0f0;
-	padding: 60px 0 20px;
-	font-family: 'Poppins', sans-serif;
+background:  #00CED1;
+;
+  color: white;
+  padding: 60px 0 0;
+  font-family: 'Poppins', sans-serif;
 }
 
+
+
+
+/* Footer Container */
 .footer-container {
-	max-width: 1200px;
-	margin: auto;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	gap: 40px;
-	padding: 0 30px;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 0 30px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+   color: white;
+}
+
+/* Logo */
+.footer-logo-col {
+  flex: 1 1 200px;
+  min-width: 180px;
+}
+.footer-logo {
+  width: 140px;
+  border-radius: 8px;
+  display: block;
+}
+
+/* Right-side Columns */
+.footer-links {
+  flex: 3;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 30px;
+  list-style: none;
+  padding:0;
+  margin:0;
+  
 }
 
 .footer-col {
-	flex: 1 1 250px;
-	min-width: 230px;
+  min-width: 180px;
 }
 
-.footer-logo {
-	width: 150px;
-	margin-bottom: 15px;
-}
-
+/* Headings */
 .footer-col h4 {
-	font-size: 18px;
-	color: #ffffff;
-	margin-bottom: 20px;
-	position: relative;
+  font-size: 18px;
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
 }
 
+/* 🔸 Remove Underline */
 .footer-col h4::after {
-	content: '';
-	width: 50px;
-	height: 2px;
-	background: #00bcd4;
-	position: absolute;
-	left: 0;
-	bottom: -8px;
-	border-radius: 2px;
+  display: none;
+}
+
+/* Lists */
+.footer-col {
+  text-align: left; /* headings aur list left align */
 }
 
 .footer-col ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .footer-col ul li {
-	margin: 10px 0;
+  margin: 8px 0; /* spacing between links */
 }
 
 .footer-col ul li a {
-	color: #d4e6ec;
-	text-decoration: none;
-	font-size: 15px;
-	transition: 0.3s;
+ color: #b8d2d9;
+ 
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.3s;
+  display: inline-block; /* hover padding work kare */
 }
 
 .footer-col ul li a:hover {
-	color: #00bcd4;
-	padding-left: 5px;
+  color: #00bcd4;
+  padding-left: 5px; /* hover me thoda shift */
 }
 
-.footer p {
-	font-size: 14px;
-	line-height: 1.7;
-	color: #d6e6ea;
+
+/* Social Icons */
+.social-links {
+  display: flex;
+  justify-content: flex-start;  /* same left alignment as text */
+  gap: 30px;                    /* icons ke beech gap */
+  margin-top: 100px;             /* resources ke niche space */
+            /* thoda bottom me push */
 }
 
-/* Social icons */
 .social-links a {
-	display: inline-block;
-	margin-right: 10px;
-	background: #00bcd4;
-	color: #fff;
-	width: 36px;
-	height: 36px;
-	line-height: 36px;
-	border-radius: 50%;
-	text-align: center;
-	transition: 0.3s;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: #00bcd4;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: 0.3s;
 }
 
 .social-links a:hover {
-	background: #0097a7;
-	transform: scale(1.1);
+  background: #0097a7;
+  transform: scale(1.1);
 }
 
-/* Footer Bottom */
+
+
+
+/* Footer Bottom Bar */
 .footer-bottom {
-	text-align: center;
-	border-top: 1px solid rgba(255, 255, 255, 0.2);
-	margin-top: 40px;
-	padding-top: 20px;
-	font-size: 14px;
-	color: #a8c5ca;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px 40px;
+  background: linear-gradient(135deg, #001d28, #00394a);
+  font-size: 14px;
+  color: #a8c5ca;
+}
+.footer-bottom .left {
+  margin: 0;
+}
+.footer-bottom .right a {
+  color: #a8c5ca;
+  text-decoration: none;
+  margin: 0 5px;
+}
+.footer-bottom .right a:hover {
+  color: #00bcd4;
 }
 
-@media ( max-width : 768px) {
-	.footer-container {
-		flex-direction: column;
-		text-align: center;
-	}
-	.footer-col h4::after {
-		left: 50%;
-		transform: translateX(-50%);
-	}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
-.heading-link {
-	text-decoration: none;
-	color: #0078ff;
-	font-weight: bold;
-	font-size: 2.2rem;
-	font-family: "Poppins", sans-serif;
-	transition: color 0.3s ease;
-}
 
-.heading-link:hover {
-	color: #0056b3;
-	
-}
+
+
+
+
+
 
 
 
@@ -291,6 +471,7 @@ body {
   box-shadow: none;
   transition: transform 0.3s ease-in-out;
 }
+
 .img-transparent:hover {
   transform: scale(1.03);
 }
@@ -304,6 +485,53 @@ body {
 <body>
 
 <%@ include file="header.jsp" %>
+
+<%@ include file="payment.jsp" %>
+
+
+
+<div class="hero-section">
+
+    <!-- LEFT SIDE IMAGE -->
+    <div class="hero-image">
+        <img src="WhatsApp_Image_2025-11-14_at_15.28.22_c279ad63-removebg-preview.png">
+    </div>
+
+    <!-- RIGHT SIDE TEXT + LOGIN BOX -->
+    <div class="hero-right">
+
+        <!-- TEXT -->
+    <div class="text-box">
+  <h1>Dream Naukri: Filling gaps in Hiring and Being Hired</h1>
+
+<p>
+    Just like Piyush Chawla's ball finds a way to knockout 🎯
+    Apply for jobs with <b>Dream Naukri</b> and enjoy the music of success...
+    We are working for your <b>Dreams!</b> 💫
+</p>
+  
+</div>
+    
+
+        <!-- LOGIN BOX -->
+        <div class="login-box">
+            <h3>Login / Sign Up</h3>
+            <form>
+                <input type="text" placeholder="Enter Username">
+                <input type="password" placeholder="Enter Password">
+                <button>Login</button>
+            </form>
+            <p style="text-align:center; margin-top:10px;">
+                <a href="#">Forgot Password?</a><br>
+                New user? <a href="#" style="font-weight:600;">Sign Up</a>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+
 
 	<!-- Hero Section -->
 	<div class="hero container">
@@ -321,9 +549,11 @@ body {
 
 	<!-- Post Job -->
 	<div class="text-center">
-		<button class="post-btn">Post a Job</button>
+		<a href="${pageContext.request.contextPath}/login.jsp" class="post-btn text-decoration-none d-inline-block">Post a Job</a>
 	</div>
 
+
+<%@ include file="jobPlan.jsp" %>
 	
 	
 	
@@ -420,70 +650,72 @@ body {
 <%@ include file="featured-jobs.jsp" %>
 
 
-	<!-- Footer -->
-	<footer class="footer">
-		<div class="footer-container">
+	<!-- ===== Footer Section ===== -->
+<footer class="footer">
+  <div class="footer-container">
 
-			<!-- Company Info -->
-			<div class="footer-col">
-				<p>IARDO delivers eCommerce Product Listing Services, Graphic
-					Design, Website Design, SEO, and Digital Marketing. Since 2016, we
-					have served over 15,000+ satisfied clients in India.</p>
-			</div>
+    <!-- Left: Company Logo -->
+    <div class="footer-logo-col">
+      <img src="WhatsApp_Image_2025-11-04_at_20.31.46_58eea606-removebg-preview.png" alt="IARDO Logo" class="footer-logo">
+    </div>
 
-			<!-- Services -->
-			<div class="footer-col">
-				<h4>Our Services</h4>
-				<ul>
-					<li><a href="#">Digital Marketing</a></li>
-					<li><a href="#">Social Media Marketing (SMM)</a></li>
-					<li><a href="#">Web Development</a></li>
-					<li><a href="#">SEO Services</a></li>
-				</ul>
-			</div>
+    <!-- Right: Footer Links -->
+    <div class="footer-links">
 
-			<!-- Forms & Company -->
-			<div class="footer-col">
-				<h4>Forms & Company</h4>
-				<ul>
-					<li><a href="#">Seller Acquisition Form</a></li>
-					<li><a href="#">Registration</a></li>
-					<li><a href="#">Certifications</a></li>
-				</ul>
-			</div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#">Job Posting</a></li>
+          <li><a href="#">Contests</a></li>
+          <li><a href="#">Database</a></li>
+          <li><a href="#">Enterprise</a></li>
+          <li><a href="#">Pricing</a></li>
+        </ul>
+      </div>
 
-			<!-- Quick Commerce -->
-			<div class="footer-col">
-				<h4>Quick Commerce</h4>
-				<ul>
-					<li><a href="#">Blinkit</a></li>
-					<li><a href="#">Zepto</a></li>
-					<li><a href="#">Swiggy InstaMart</a></li>
-					<li><a href="#">BigBasket</a></li>
-					<li><a href="#">Swiggy Mini</a></li>
-				</ul>
-			</div>
+      <div class="footer-col">
+        <h4>Get To Know Us</h4>
+        <ul>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact Support</a></li>
+          <li><a href="#">Contact Sales</a></li>
+          <li><a href="#">Job Seekers</a></li>
+        </ul>
+      </div>
 
-			<!-- Social Links -->
-			<div class="footer-col">
-				<h4>Connect With Us</h4>
-				<div class="social-links">
-					<a href="#"><i class="bi bi-facebook"></i></a> <a href="#"><i
-						class="bi bi-twitter"></i></a> <a href="#"><i
-						class="bi bi-instagram"></i></a> <a href="#"><i
-						class="bi bi-linkedin"></i></a>
-				</div>
-			</div>
-		</div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Blogs</a></li>
+        </ul>
+      
+        <div class="social-links">
+          <a href="https://www.facebook.com/profile.php?id=61583433993061" target="_blank"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/dreamnaukricareer/?hl=en" target="_blank"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/dreamnaukri-career-2ba264398/?skipRedirect=true" target="_blank"><i class="bi bi-linkedin"></i></a>
+          <a href="https://x.com/dreamnaukri" target="_blank"><i class="bi bi-twitter"></i></a>
+        </div>
+      </div>
 
-		<!-- Footer Bottom -->
-		<div class="footer-bottom">
-			Copyright © 2025 IARDO | Powered by <strong>IARDO E-commerce
-				Enabler</strong>
-		</div>
-	</footer>
+    </div>
+  </div>
 
-	<!-- Bootstrap Icons CDN -->
+  <!-- Bottom Copyright Bar -->
+  <div class="footer-bottom">
+    <p class="left">© 2025 IARDO | All rights reserved.</p>
+    <p class="right">
+      <a href="privacy.jsp">Privacy Policy</a>| 
+      <a href="terms.jsp">Terms & Conditions</a> | 
+      <a href="TS.jsp">Terms of Service</a> | 
+      <a href="Disclosur.jsp">Disclosure Policy</a>
+    </p>
+  </div>
+</footer>
+
+<%@ include file="chat-widget.jsp" %>
+
+
 
 </body>
 </html>

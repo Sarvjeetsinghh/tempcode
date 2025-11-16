@@ -21,7 +21,6 @@ body {
 	height: 100px;
 }
 
-
 .btn-register {
 	background-color: blue;
 	color: white;
@@ -30,8 +29,12 @@ body {
 	padding: 8px 20px;
 	border: none;
 	transition: 0.3s;
+	cursor: pointer; /* optional but makes it look clickable */
 }
 
+.btn-register:hover {
+	background-color: skyblue;
+}
 
 
 /* Navbar Links */
@@ -95,6 +98,10 @@ body {
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
 }
 
+
+.heading-link {
+text-decoration: none;
+}
 
 
 </style>
