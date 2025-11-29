@@ -1,204 +1,253 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.iardo.dao.CandidateDAO" %>
+<%@ page import="com.iardo.model.Candidate" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%
-    if (session == null || !"candidate".equals(session.getAttribute("userType"))) {
+    if (session == null || session.getAttribute("userType") == null 
+        || !"candidate".equals(session.getAttribute("userType"))) {
         response.sendRedirect("login.jsp?error=Please login first!");
         return;
     }
+
     String userEmail = (String) session.getAttribute("userEmail");
+
+    CandidateDAO dao = new CandidateDAO();
+    Candidate candidate = dao.getCandidateByEmail(userEmail);
+
+    if (candidate == null) {
+        response.sendRedirect("login.jsp?error=User not found!");
+        return;
+    }
+
+    int completion = candidate.getProfileCompletion();
 %>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Candidate Dashboard - DreamJob</title>
+    <title>Candidate Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
         body {
-            background-color: #f5f7fa;
-            font-family: "Poppins", sans-serif;
+            background: #f0f2f5;
+            overflow-x: hidden;
         }
 
-        /* Sidebar */
+        /* SIDEBAR */
         .sidebar {
+            height: 100vh;
+            background: #0d6efd;
+            padding-top: 20px;
             position: fixed;
+            width: 230px;
             top: 0;
             left: 0;
-            height: 100%;
-            width: 250px;
-            background: #0d6efd;
-            color: white;
-            padding-top: 60px;
+            overflow-y: auto;
             transition: all 0.3s;
         }
 
         .sidebar a {
-            color: white;
-            text-decoration: none;
+            color: #fff;
+            padding: 12px 20px;
             display: block;
-            padding: 15px 25px;
+            text-decoration: none;
             font-size: 16px;
-            transition: background 0.2s;
+            border-radius: 5px;
+            margin: 2px 10px;
+            transition: background 0.3s, transform 0.2s;
         }
 
         .sidebar a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: #084298;
+            transform: translateX(5px);
         }
 
-        .sidebar .active {
-            background: #0b5ed7;
-        }
-
-        /* Navbar */
-        .navbar {
-            background: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Content */
-        .main-content {
+        /* MAIN CONTENT */
+        .content {
             margin-left: 250px;
-            padding: 30px;
+            padding: 20px;
         }
 
-        .card-job {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #0d6efd;
+            object-fit: cover;
+            transition: transform 0.3s;
         }
 
-        .card-job:hover {
-            transform: translateY(-5px);
+        .profile-img:hover {
+            transform: scale(1.05);
         }
 
-        .card-job .btn {
-            border-radius: 20px;
+        .card {
+            border-radius: 12px;
         }
 
-        /* Responsive sidebar */
-        @media (max-width: 991px) {
+        .card-header {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .progress {
+            height: 25px;
+            border-radius: 12px;
+        }
+
+        .progress-bar {
+            font-weight: 600;
+        }
+
+        /* RESPONSIVE RULES */
+        @media (max-width: 992px) {
+            .content { margin-left: 200px; }
+            .sidebar { width: 200px; }
+        }
+
+        @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
                 height: auto;
                 position: relative;
             }
-            .main-content {
-                margin-left: 0;
+
+            .sidebar a { display: inline-block; padding: 10px; }
+            .content { margin-left: 0; margin-top: 10px; padding: 10px; }
+
+            .card-body.d-flex {
+                flex-direction: column;
+                text-align: center;
             }
+
+            .card-body .ms-auto {
+                margin-left: 0 !important;
+                margin-top: 10px;
+            }
+
+            .profile-img { margin-bottom: 10px; }
         }
+
+        @media (max-width: 480px) {
+            .sidebar a { font-size: 14px; padding: 8px; }
+            .profile-img { width: 70px; height: 70px; }
+        }
+
+        /* CARD HOVER EFFECT */
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: 0.3s;
+        }
+
     </style>
 </head>
+
 <body>
 
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h4 class="text-white text-center mb-4">Candidate Panel</h4>
+    <a href="candidateDashboard.jsp"><i class="bi bi-house-door-fill me-2"></i>Dashboard</a>
+    <a href="editProfile.jsp"><i class="bi bi-pencil-square me-2"></i>Edit Profile</a>
+    <a href="#"><i class="bi bi-briefcase-fill me-2"></i>Applied Jobs</a>
+    <a href="#"><i class="bi bi-stars me-2"></i>Recommended Jobs</a>
+    <a href="#"><i class="bi bi-bookmark-fill me-2"></i>Saved Jobs</a>
+    <a href="logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+</div>
 
+<!-- MAIN CONTENT -->
+<div class="content container mt-4">
 
-    <!-- ✅ Sidebar -->
-    <div class="sidebar">
-        <a href="#" class="active"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
-        <a href="searchJobs.jsp"><i class="bi bi-search me-2"></i> Search Jobs</a>
-        <a href="myApplications.jsp"><i class="bi bi-briefcase me-2"></i> My Applications</a>
-        <a href="candidateProfile.jsp"><i class="bi bi-person-circle me-2"></i> My Profile</a>
-        <a href="notifications.jsp"><i class="bi bi-bell me-2"></i> Notifications</a>
-        <a href="settings.jsp"><i class="bi bi-gear me-2"></i> Settings</a>
-    </div>
+    <!-- Profile Header -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body d-flex align-items-center">
+        
+        
 
-    <!-- ✅ Main Content -->
-    <div class="main-content">
-        <div class="container-fluid">
-            <h3 class="fw-bold text-primary mb-4">Welcome, Candidate 👋</h3>
-            
-
-            <!-- Suggested Jobs Section -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-semibold">Recommended Jobs</h5>
-                <a href="searchJobs.jsp" class="text-decoration-none text-primary">View All</a>
+          <img src="360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg"
+                 class="profile-img me-3" alt="Profile Picture">
+       
+            <div>
+                <h4 class="mb-1"><%= candidate.getFullName() %></h4>
+                <p class="text-muted mb-0"><i class="bi bi-envelope-fill me-1"></i> <%= candidate.getEmail() %></p>
+                <p class="text-muted mb-0"><i class="bi bi-person-badge-fill me-1"></i> Category: <%= candidate.getCategory() %></p>
             </div>
 
-            <div class="row g-4">
-                <!-- Job Card 1 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card card-job p-3">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="fw-bold">Java Developer</h5>
-                            <span class="badge bg-success">Full Time</span>
-                        </div>
-                        <p class="text-muted mb-1">TCS Pvt Ltd, Pune</p>
-                        <p><i class="bi bi-geo-alt"></i> Pune, Maharashtra</p>
-                        <p><i class="bi bi-currency-rupee"></i> 6 - 10 LPA</p>
-                        <a href="#" class="btn btn-primary w-100 mt-2">Apply Now</a>
-                    </div>
-                </div>
-
-                <!-- Job Card 2 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card card-job p-3">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="fw-bold">React Developer</h5>
-                            <span class="badge bg-warning text-dark">Remote</span>
-                        </div>
-                        <p class="text-muted mb-1">Infosys, Bengaluru</p>
-                        <p><i class="bi bi-geo-alt"></i> Remote / WFH</p>
-                        <p><i class="bi bi-currency-rupee"></i> 8 - 12 LPA</p>
-                        <a href="#" class="btn btn-primary w-100 mt-2">Apply Now</a>
-                    </div>
-                </div>
-
-                <!-- Job Card 3 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card card-job p-3">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="fw-bold">Data Analyst</h5>
-                            <span class="badge bg-info text-dark">Hybrid</span>
-                        </div>
-                        <p class="text-muted mb-1">Cognizant, Mumbai</p>
-                        <p><i class="bi bi-geo-alt"></i> Mumbai, Maharashtra</p>
-                        <p><i class="bi bi-currency-rupee"></i> 5 - 9 LPA</p>
-                        <a href="#" class="btn btn-primary w-100 mt-2">Apply Now</a>
-                    </div>
-                </div>
+            <div class="ms-auto">
+                <a href="editProfile.jsp" class="btn btn-outline-primary me-2"><i class="bi bi-pencil-square"></i> Update Profile</a>
+                <a href="#" class="btn btn-primary"><i class="bi bi-upload"></i> Upload CV</a>
             </div>
-
-            <!-- My Applications Section -->
-            <div class="mt-5">
-                <h5 class="fw-semibold mb-3">My Recent Applications</h5>
-                <div class="table-responsive shadow-sm">
-                    <table class="table table-hover align-middle">
-                        <thead class="table-primary">
-                            <tr>
-                                <th>Job Title</th>
-                                <th>Company</th>
-                                <th>Status</th>
-                                <th>Date Applied</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Java Developer</td>
-                                <td>TCS Pvt Ltd</td>
-                                <td><span class="badge bg-warning text-dark">Under Review</span></td>
-                                <td>2025-11-10</td>
-                            </tr>
-                            <tr>
-                                <td>React Developer</td>
-                                <td>Infosys</td>
-                                <td><span class="badge bg-success">Selected</span></td>
-                                <td>2025-11-06</td>
-                            </tr>
-                            <tr>
-                                <td>Python Developer</td>
-                                <td>Wipro</td>
-                                <td><span class="badge bg-danger">Rejected</span></td>
-                                <td>2025-11-02</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Profile Completion -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="mb-3"><i class="bi bi-bar-chart-fill me-2"></i>Profile Strength</h5>
+            <div class="progress mb-2">
+                <div class="progress-bar bg-success" role="progressbar"
+                     style="width: <%= completion %>%;">
+                    <%= completion %>% Complete
+                </div>
+            </div>
+            <p class="text-muted">Improve your profile to get better job recommendations and visibility.</p>
+        </div>
+    </div>
+
+    <!-- Overview Section -->
+    <div class="row">
+
+        <!-- Personal Info -->
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <i class="bi bi-person-fill me-2"></i>Personal Information
+                </div>
+                <div class="card-body">
+                    <p><strong>Phone:</strong> <%= candidate.getPhone() != null ? candidate.getPhone() : "Not Updated" %></p>
+                    <p><strong>Gender:</strong> <%= candidate.getGender() != null ? candidate.getGender() : "Not Updated" %></p>
+                    <p><strong>Date of Birth:</strong> <%= candidate.getDob() != null ? candidate.getDob() : "Not Updated" %></p>
+                    <p><strong>Experience:</strong> <%= candidate.getExperience() != null ? candidate.getExperience() : "Not Updated" %></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills & Professional Info -->
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <i class="bi bi-gear-fill me-2"></i>Skills & Professional Info
+                </div>
+                <div class="card-body">
+                    <p><strong>Skills:</strong> <%= candidate.getSkills() != null ? candidate.getSkills() : "Not Added" %></p>
+                    <p><strong>Education:</strong> <%= candidate.getEducation() != null ? candidate.getEducation() : "Not Added" %></p>
+                    <p><strong>Projects:</strong> <%= candidate.getProjects() != null ? candidate.getProjects() : "Not Added" %></p>
+                    <p><strong>Certifications:</strong> <%= candidate.getCertifications() != null ? candidate.getCertifications() : "Not Added" %></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JOB RECOMMENDATIONS -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light">
+            <i class="bi bi-lightbulb-fill me-2"></i>Recommended Jobs For You
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info d-flex align-items-center">
+                <i class="bi bi-info-circle-fill me-2"></i>
+                Job recommendations will appear here based on your skills: 
+                <strong class="ms-1"><%= candidate.getSkills() != null ? candidate.getSkills() : "Add skills to get job suggestions" %></strong>
+            </div>
+            <p class="text-muted">Integrate job API or database to display real-time job recommendations.</p>
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>

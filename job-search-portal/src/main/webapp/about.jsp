@@ -121,30 +121,30 @@
             <div class="row g-4 justify-content-center">
                 <div class="col-md-3">
                     <div class="team-card">
-                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Founder">
-                        <h5>Vivek Singh</h5>
-                        <p class="text-muted">Founder & Lead Developer</p>
+                        <img src="abhi.jpg" alt="Analyst">
+                        <h5>Abhishek Gupta</h5>
+                        <p class="text-muted">Data Analyst</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="team-card">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Designer">
-                        <h5>Priya Sharma</h5>
-                        <p class="text-muted">UI/UX Designer</p>
+                        <img src="img me.jpg" alt="Designer">
+                        <h5>Sarvjeet Singh</h5>
+                        <p class="text-muted">Full Stack Developer</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="team-card">
-                        <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Backend Dev">
-                        <h5>Rohan Mehta</h5>
-                        <p class="text-muted">Backend Engineer</p>
+                        <img src="mansi.jpg" alt="Backend Dev">
+                        <h5>Mansi Tomar</h5>
+                        <p class="text-muted">Java Full Stack Developer</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="team-card">
                         <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Marketing">
-                        <h5>Neha Patel</h5>
-                        <p class="text-muted">Marketing Head</p>
+                        <h5>Anmol Chaursiya</h5>
+                        <p class="text-muted">Software Engineer</p>
                     </div>
                 </div>
             </div>

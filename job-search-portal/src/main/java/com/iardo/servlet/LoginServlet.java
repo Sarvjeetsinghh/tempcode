@@ -1,9 +1,9 @@
 package com.iardo.servlet;
 
-
-
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import com.iardo.util.DBConnection;
 
@@ -17,6 +17,16 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+
+    // Allow GET to show redirect to login.jsp (optional)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // If someone requests /LoginServlet with GET, forward to login page
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -25,21 +35,25 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        System.out.println("\n=== LOGIN ATTEMPT ===");
+        System.out.println("=== LOGIN ATTEMPT ===");
         System.out.println("User Type: " + userType);
         System.out.println("Email: " + email);
 
+        if (userType == null || userType.trim().isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp?error=Select+user+type");
+            return;
+        }
+
+        String sql = null;
         try (Connection conn = DBConnection.getConnection()) {
 
-            String sql = "";
-            String tableName = "";
-            
             if ("candidate".equals(userType)) {
-                sql = "SELECT id, name, email FROM candidates WHERE email=? AND password=?";
-                tableName = "candidates";
+                sql = "SELECT id, name, email, password FROM candidates WHERE email=? AND password=?";
             } else if ("employer".equals(userType)) {
-                sql = "SELECT id, companyName, email FROM employers WHERE email=? AND password=?";
-                tableName = "employers";
+                sql = "SELECT id, companyName AS name, email, password FROM employers WHERE email=? AND password=?";
+            } else {
+                response.sendRedirect(request.getContextPath() + "/login.jsp?error=Invalid+user+type");
+                return;
             }
 
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -49,52 +63,36 @@ public class LoginServlet extends HttpServlet {
 
             if (rs.next()) {
                 HttpSession session = request.getSession(true);
-                
-                // Common attributes
+
                 session.setAttribute("userType", userType);
                 session.setAttribute("userEmail", email);
 
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+
                 if ("candidate".equals(userType)) {
-                    int candidateId = rs.getInt("id");
-                    String candidateName = rs.getString("name");
-                    
-                    session.setAttribute("candidateId", candidateId);
-                    session.setAttribute("candidateName", candidateName);
-
-                    System.out.println("✅ CANDIDATE LOGIN SUCCESS");
-                    System.out.println("ID: " + candidateId);
-                    System.out.println("Name: " + candidateName);
-                    System.out.println("Session ID: " + session.getId());
-
+                    session.setAttribute("candidateId", id);
+                    session.setAttribute("candidateName", name);
+                    System.out.println("CANDIDATE LOGIN SUCCESS: id=" + id + " name=" + name);
                     response.sendRedirect(request.getContextPath() + "/candidateDashboard.jsp");
-                    
-                } else if ("employer".equals(userType)) {
-                    int employerId = rs.getInt("id");
-                    String employerName = rs.getString("companyName");
-                    
-                    session.setAttribute("employerId", employerId);
-                    session.setAttribute("employerName", employerName);
-
-                    System.out.println("✅ EMPLOYER LOGIN SUCCESS");
-                    System.out.println("ID: " + employerId);
-                    System.out.println("Company: " + employerName);
-                    System.out.println("Session ID: " + session.getId());
-                    System.out.println("employerId in session: " + session.getAttribute("employerId"));
-                    System.out.println("employerName in session: " + session.getAttribute("employerName"));
-
-                    response.sendRedirect(request.getContextPath() + "/employerDashboard");
+                } else {
+                    session.setAttribute("employerId", id);
+                    session.setAttribute("employerName", name);
+                    System.out.println("EMPLOYER LOGIN SUCCESS: id=" + id + " company=" + name);
+                    // redirect to employer dashboard URL (change as needed)
+                    response.sendRedirect(request.getContextPath() + "/employerDashboard.jsp");
                 }
-                
+
             } else {
-                System.out.println("❌ LOGIN FAILED - Invalid credentials");
+                System.out.println("LOGIN FAILED - Invalid credentials for: " + email);
                 response.sendRedirect(request.getContextPath() + "/login.jsp?error=Invalid+email+or+password");
             }
 
         } catch (Exception e) {
-            System.err.println("❌ Exception in LoginServlet:");
+            System.err.println("Exception in LoginServlet:");
             e.printStackTrace();
+            // send a generic message to user; check logs for details
             response.sendRedirect(request.getContextPath() + "/login.jsp?error=Server+error");
         }
     }
 }
-

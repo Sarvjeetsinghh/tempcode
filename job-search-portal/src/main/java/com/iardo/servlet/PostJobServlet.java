@@ -2,6 +2,8 @@ package com.iardo.servlet;
 
 
 import com.iardo.dao.JobDAO;
+import com.iardo.model.Job;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -65,7 +67,19 @@ public class PostJobServlet extends HttpServlet {
         System.out.println("  Category: " + category);
 
         // Add job to database
-        boolean success = jobDAO.addJob(employerId, title, description, location, category, salary);
+     // Add job to database using Job object
+        Job job = new Job();
+
+        job.setEmployerId(employerId);
+        job.setTitle(title);
+        job.setDescription(description);
+        job.setLocation(location);
+             // Make sure your form has jobType
+        // Make sure your form has experience
+        job.setSalary(salary);
+     // Form should submit deadline
+
+        boolean success = jobDAO.addJob(job);
 
         if (success) {
             System.out.println("✅ Job posted successfully!");
@@ -74,6 +88,7 @@ public class PostJobServlet extends HttpServlet {
             System.out.println("❌ Failed to post job");
             response.sendRedirect(request.getContextPath() + "/postJob.jsp?error=Failed+to+post+job");
         }
+
 
         System.out.println("======================\n");
     }

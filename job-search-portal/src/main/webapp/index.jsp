@@ -1,131 +1,145 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApnaJob - Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+    <title>Job Portal - Find Your Dream Job</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            background: linear-gradient(135deg, #ffe2d1, #cbb2fe);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f5576c 100%);
             min-height: 100vh;
-            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-
-        .navbar {
-            background: transparent;
+        .container {
+            max-width: 1000px;
+            width: 100%;
         }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 28px;
-        }
-
         .hero {
             text-align: center;
-            padding: 80px 20px;
-            color: #222;
+            color: white;
+            margin-bottom: 50px;
         }
-
         .hero h1 {
-            font-weight: 700;
-            font-size: 2rem;
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-
-        .btn-orange {
-            background-color: #ff4b00;
-            color: white;
-            font-weight: 600;
-            border-radius: 25px;
-            padding: 10px 20px;
-            text-decoration: none;
-            transition: 0.3s;
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
         }
-
-        .btn-orange:hover {
-            background-color: #e03e00;
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
         }
-
-        .search-bar {
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        .card p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .btn-group {
             display: flex;
-            justify-content: center;
-            margin-top: 30px;
+            flex-direction: column;
+            gap: 15px;
         }
-
-        .search-bar input {
-            width: 50%;
-            padding: 12px;
-            border-radius: 50px 0 0 50px;
-            border: none;
-            outline: none;
+        .btn {
+            padding: 14px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: inline-block;
         }
-
-        .search-bar button {
-            border-radius: 0 50px 50px 0;
-            background-color: #1a1b4b;
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border: none;
-            padding: 12px 25px;
-            transition: 0.3s;
         }
-
-        .search-bar button:hover {
-            background-color: #0e0f3b;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
-
-        @media (max-width: 768px) {
-            .search-bar input {
-                width: 70%;
-            }
-
-            .hero h1 {
-                font-size: 1.6rem;
-            }
-
-            .navbar .btn {
-                margin-top: 5px;
-                display: block;
-                width: 100%;
-            }
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+        }
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg px-4">
-        <a class="navbar-brand" href="#">Dream<span class="text-primary">Job</span>.in</a>
-        <div class="ms-auto">
-            <a href="registerCandidate.jsp" class="btn btn-orange me-2">Register as Candidate</a>
-            <a href="registerEmployer.jsp" class="btn btn-orange me-2">Register as Employer</a>
-            <a href="login.jsp" class="btn btn-light border">Login / Register</a>
+    <div class="container">
+        <div class="hero">
+            <h1>🚀 Welcome to Job Portal</h1>
+            <p>Connect talented professionals with great opportunities</p>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Join <span class="text-primary">ApnaJob.in</span> and explore<br> 
-            a multitude of job opportunities waiting for you
-        </h1>
-        <p class="mt-3 text-muted">
-            Find Free Jobs and Career Opportunities on ApnaJob.in – Your Path to a Skilled Workforce.<br>
-            Effortless Hiring: Discover and Recruit Top Talent. Explore Job Opportunities Today!
-        </p>
+        <div class="cards-container">
+            <div class="card">
+                <div class="icon">👨‍💼</div>
+                <h2>For Candidates</h2>
+                <p>Find your dream job from thousands of opportunities. Build your profile and apply easily.</p>
+                <div class="btn-group">
+                    <a href="candidate-login.jsp" class="btn btn-primary">Login</a>
+                    <a href="candidate-register.jsp" class="btn btn-primary">Register</a>
+                </div>
+            </div>
 
-        <!-- Search Bar -->
-        <form action="searchJobs.jsp" method="get" class="search-bar">
-            <input type="text" name="query" placeholder="Job title, keywords" required>
-            <button type="submit">Find Jobs</button>
-        </form>
-
-        <!-- Post Job Button -->
-        <div class="mt-4">
-            <a href="postJob.jsp" class="btn btn-orange">Post a Job</a>
+            <div class="card">
+                <div class="icon">🏢</div>
+                <h2>For Employers</h2>
+                <p>Post jobs and find the perfect candidates. Manage applications efficiently.</p>
+                <div class="btn-group">
+                    <a href="employer-login.jsp" class="btn btn-secondary">Login</a>
+                    <a href="employer-register.jsp" class="btn btn-secondary">Register</a>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <div class="footer">
+            <p>&copy; 2024 Job Portal. All rights reserved.</p>
+        </div>
+    </div>
 </body>
 </html>
