@@ -1,6 +1,64 @@
 package com.iardo.servlet;
 
 import java.io.IOException;
+import com.iardo.model.Candidate;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+@WebServlet("/candidate-dashboard")
+public class CandidateDashboardServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession(false);
+
+        if (session == null || session.getAttribute("loggedCandidate") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        Candidate candidate = (Candidate) session.getAttribute("loggedCandidate");
+        request.setAttribute("candidate", candidate);
+
+        request.getRequestDispatcher("candidate/profile-dashboard.jsp")
+               .forward(request, response);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* package com.iardo.servlet;
+
+import java.io.IOException;
 
 import com.iardo.model.Candidate;
 
@@ -35,3 +93,4 @@ import jakarta.servlet.http.HttpSession;
 	}
 
 
+*/

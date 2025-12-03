@@ -612,12 +612,6 @@ background:  #00CED1;
 <%@ include file="header.jsp" %>
 
 
-
-
-
-
-
-
 <div class="hero-section">
 
     <!-- LEFT SIDE IMAGE -->

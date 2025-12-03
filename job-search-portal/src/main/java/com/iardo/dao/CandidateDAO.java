@@ -33,7 +33,6 @@ public class CandidateDAO {
         return status;
     }
 
-    // Get candidate by email (for login and profile viewing)
     public Candidate getCandidateByEmail(String email) {
         Candidate c = null;
         try {

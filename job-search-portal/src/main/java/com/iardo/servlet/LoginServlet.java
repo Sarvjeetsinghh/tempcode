@@ -81,6 +81,9 @@ public class LoginServlet extends HttpServlet {
                     System.out.println("EMPLOYER LOGIN SUCCESS: id=" + id + " company=" + name);
                     // redirect to employer dashboard URL (change as needed)
                     response.sendRedirect(request.getContextPath() + "/employerDashboard.jsp");
+                    
+                    
+
                 }
 
             } else {

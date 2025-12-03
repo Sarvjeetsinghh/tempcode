@@ -5,9 +5,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    // Session validation
-    if (session == null || session.getAttribute("userType") == null 
-        || !"employer".equals(session.getAttribute("userType"))) {
+    String fromPostJob = request.getParameter("fromPostJob");
+
+    // Session validation except when redirected after posting job
+    if ((session == null || session.getAttribute("userType") == null 
+        || !"employer".equals(session.getAttribute("userType")))
+        && fromPostJob == null) {
+
         response.sendRedirect("login.jsp?error=Please+login+as+employer");
         return;
     }
@@ -15,12 +19,12 @@
     Integer employerId = (Integer) session.getAttribute("employerId");
     String userEmail = (String) session.getAttribute("userEmail");
 
+    // If coming from post job redirect, session is still valid
     if (employerId == null) {
         response.sendRedirect("login.jsp?error=Invalid+session");
         return;
     }
 
-    // Fetch employer details
     EmployerDAO dao = new EmployerDAO();
     Employer employer = dao.getEmployerByEmail(userEmail);
 
@@ -29,11 +33,11 @@
         return;
     }
 
-    // Get jobs from request attribute (set by servlet)
     @SuppressWarnings("unchecked")
     List<Job> jobs = (List<Job>) request.getAttribute("jobs");
     int jobCount = (jobs != null) ? jobs.size() : 0;
 %>
+
 
 <!DOCTYPE html>
 <html lang="en">

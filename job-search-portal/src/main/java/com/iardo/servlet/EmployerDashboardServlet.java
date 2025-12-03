@@ -1,5 +1,62 @@
 package com.iardo.servlet;
 
+import com.iardo.model.Employer;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+import java.io.IOException;
+
+@WebServlet("/employer-dashboard")
+public class EmployerDashboardServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession(false);
+
+        if (session == null || session.getAttribute("loggedEmployer") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        Employer employer = (Employer) session.getAttribute("loggedEmployer");
+        request.setAttribute("employer", employer);
+
+        request.getRequestDispatcher("employer/profile-dashboard.jsp").forward(request, response);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* package com.iardo.servlet;
+
 import com.iardo.dao.JobDAO;
 import com.iardo.model.Job;
 import jakarta.servlet.RequestDispatcher;
@@ -73,3 +130,5 @@ public class EmployerDashboardServlet extends HttpServlet {
         doGet(request, response);
     }
 }
+
+*/
